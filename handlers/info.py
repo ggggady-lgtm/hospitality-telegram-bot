@@ -1,10 +1,16 @@
 """
 Обработчик информации об объекте
 """
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from config import PROPERTY
-from keyboards import get_contact_keyboard, get_main_menu
+from keyboards import get_main_menu
+import re
+
+
+def _clean_phone_for_tel(phone):
+    """Очистить номер телефона для tel: URL (только цифры и +)"""
+    return re.sub(r'[^\d+]', '', phone)
 
 
 async def info_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -37,9 +43,29 @@ async def info_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 👍 Рейтинг: ⭐⭐⭐⭐⭐ (5.0 звёзд на Яндекс.Картах)
 """
     
+    # Создаём клавиатуру с контактами
+    keyboard = []
+    if PROPERTY['phone']:
+        clean_phone = _clean_phone_for_tel(PROPERTY['phone'])
+        keyboard.append([InlineKeyboardButton(
+            f'☎️ {PROPERTY["phone"]}',
+            url=f'tel:{clean_phone}'
+        )])
+    if PROPERTY['website']:
+        keyboard.append([InlineKeyboardButton(
+            '🌐 Сайт',
+            url=PROPERTY['website']
+        )])
+    if PROPERTY['telegram']:
+        keyboard.append([InlineKeyboardButton(
+            '📱 Telegram',
+            url=PROPERTY['telegram']
+        )])
+    keyboard.append([InlineKeyboardButton('🔙 Назад', callback_data='back_to_main')])
+    
     await update.message.reply_text(
         info_text,
-        reply_markup=get_contact_keyboard()
+        reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
 
@@ -62,7 +88,27 @@ async def contacts_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 Желаете связаться с нами?
 """
     
+    # Создаём клавиатуру с контактами
+    keyboard = []
+    if PROPERTY['phone']:
+        clean_phone = _clean_phone_for_tel(PROPERTY['phone'])
+        keyboard.append([InlineKeyboardButton(
+            f'☎️ {PROPERTY["phone"]}',
+            url=f'tel:{clean_phone}'
+        )])
+    if PROPERTY['website']:
+        keyboard.append([InlineKeyboardButton(
+            '🌐 Сайт',
+            url=PROPERTY['website']
+        )])
+    if PROPERTY['telegram']:
+        keyboard.append([InlineKeyboardButton(
+            '📱 Telegram',
+            url=PROPERTY['telegram']
+        )])
+    keyboard.append([InlineKeyboardButton('🔙 Назад', callback_data='back_to_main')])
+    
     await update.message.reply_text(
         contact_text,
-        reply_markup=get_contact_keyboard()
+        reply_markup=InlineKeyboardMarkup(keyboard)
     )
