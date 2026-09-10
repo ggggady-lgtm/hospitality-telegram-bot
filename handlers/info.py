@@ -45,18 +45,18 @@ async def info_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Создаём клавиатуру с контактами
     keyboard = []
-    if PROPERTY['phone']:
+    if PROPERTY.get('phone') and PROPERTY['phone'].strip():
         clean_phone = _clean_phone_for_tel(PROPERTY['phone'])
         keyboard.append([InlineKeyboardButton(
             f'☎️ {PROPERTY["phone"]}',
             url=f'tel:{clean_phone}'
         )])
-    if PROPERTY['website']:
+    if PROPERTY.get('website') and PROPERTY['website'].strip():
         keyboard.append([InlineKeyboardButton(
             '🌐 Сайт',
             url=PROPERTY['website']
         )])
-    if PROPERTY['telegram']:
+    if PROPERTY.get('telegram') and PROPERTY['telegram'].strip():
         keyboard.append([InlineKeyboardButton(
             '📱 Telegram',
             url=PROPERTY['telegram']
@@ -90,18 +90,18 @@ async def contacts_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Создаём клавиатуру с контактами
     keyboard = []
-    if PROPERTY['phone']:
+    if PROPERTY.get('phone') and PROPERTY['phone'].strip():
         clean_phone = _clean_phone_for_tel(PROPERTY['phone'])
         keyboard.append([InlineKeyboardButton(
             f'☎️ {PROPERTY["phone"]}',
             url=f'tel:{clean_phone}'
         )])
-    if PROPERTY['website']:
+    if PROPERTY.get('website') and PROPERTY['website'].strip():
         keyboard.append([InlineKeyboardButton(
             '🌐 Сайт',
             url=PROPERTY['website']
         )])
-    if PROPERTY['telegram']:
+    if PROPERTY.get('telegram') and PROPERTY['telegram'].strip():
         keyboard.append([InlineKeyboardButton(
             '📱 Telegram',
             url=PROPERTY['telegram']
