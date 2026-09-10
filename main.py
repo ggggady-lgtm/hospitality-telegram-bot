@@ -159,7 +159,7 @@ def main():
             INPUT_CHECKOUT: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_guests_count)],
             INPUT_GUESTS: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_phone)],
             INPUT_PHONE: [MessageHandler(filters.TEXT & ~filters.COMMAND, confirm_booking)],
-            CONFIRM: [CallbackQueryHandler(finalize_booking, pattern=r'^(confirm|cancel)$')],
+            CONFIRM: [CallbackQueryHandler(finalize_booking, pattern=r'^(confirm|cancel)_booking$')],
         },
         fallbacks=[CommandHandler('cancel', cancel_booking)],
     )
