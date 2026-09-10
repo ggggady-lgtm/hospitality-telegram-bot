@@ -3,6 +3,7 @@
 """
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 from config import SERVICES, PROPERTY
+import re
 
 
 def get_main_menu():
@@ -63,13 +64,19 @@ def get_notification_settings_keyboard():
     return InlineKeyboardMarkup(keyboard)
 
 
+def _clean_phone_for_tel(phone):
+    """Очистить номер телефона для tel: URL (только цифры и +)"""
+    return re.sub(r'[^\d+]', '', phone)
+
+
 def get_contact_keyboard():
     """Клавиатура с контактами"""
     keyboard = []
     if PROPERTY['phone']:
+        clean_phone = _clean_phone_for_tel(PROPERTY['phone'])
         keyboard.append([InlineKeyboardButton(
             f'☎️ {PROPERTY["phone"]}',
-            url=f'tel:{PROPERTY["phone"]}'
+            url=f'tel:{clean_phone}'
         )])
     if PROPERTY['website']:
         keyboard.append([InlineKeyboardButton(
