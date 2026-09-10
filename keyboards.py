@@ -44,8 +44,8 @@ def get_services_keyboard():
 def get_confirmation_keyboard():
     """Клавиатура подтверждения"""
     keyboard = [
-        [InlineKeyboardButton('✅ Подтвердить', callback_data='confirm'),
-         InlineKeyboardButton('❌ Отмена', callback_data='cancel')]
+        [InlineKeyboardButton('✅ Подтвердить', callback_data='confirm_booking'),
+         InlineKeyboardButton('❌ Отмена', callback_data='cancel_booking')]
     ]
     return InlineKeyboardMarkup(keyboard)
 
