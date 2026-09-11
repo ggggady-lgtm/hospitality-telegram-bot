@@ -177,12 +177,12 @@ def main():
     # Обработчик бронирования
     app.add_handler(booking_conv_handler)
     
-    # Обработчики callback кнопок
+    # Обработчики callback кнопок (ДО обработчика текста!)
     app.add_handler(CallbackQueryHandler(service_callback, pattern=r'^service_'))
     app.add_handler(CallbackQueryHandler(notification_callback, pattern=r'^notif_'))
     app.add_handler(CallbackQueryHandler(back_to_main, pattern=r'^back_to_main$'))
     
-    # Обработчик текстовых сообщений
+    # Обработчик текстовых сообщений (ПОСЛЕДНИЙ!)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
     
     # Запуск бота
